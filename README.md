@@ -30,6 +30,7 @@
   - [4) Run the project](#4-run-the-project)
   - [5) Deployment](#5-deployment)
   - [6) Using Docker](#6-using-docker)
+- [Creating Releases](#creating-releases)
 - [Translations](#translations)
 - [Code Style and Linting](#code-style-and-linting)
 
@@ -183,7 +184,7 @@ Once you have generated the required tokens, add them as secrets in your GitHub 
 <br>
 
 ### Environment Variables
-* **CMAKE_PREFIX_PATH:** Points CMake to the Qt 6 installation (e.g., C:\Qt\6.8.0\msvc2022_64 on Windows, ~/Qt/6.8.0/gcc_64 on Linux, ~/Qt/6.8.0/clang_64 on macOS).
+* **CMAKE_PREFIX_PATH:** Points CMake to the Qt 6 installation (e.g., C:\Qt\6.8.4\msvc2022_64 on Windows, ~/Qt/6.8.4/gcc_64 on Linux, ~/Qt/6.8.4/clang_64 on macOS).
 <br><br><br>
 
 ## [Supported Platforms]
@@ -230,9 +231,9 @@ cd TestAppLib/
 
 ### 3) Configuring and Building
 > [!IMPORTANT]
-> Ensure CMake can find Qt by setting `-DCMAKE_PREFIX_PATH` to your Qt install, for example: `..\Qt\6.8.0\msvc2022_64`
+> Ensure CMake can find Qt by setting `-DCMAKE_PREFIX_PATH` to your Qt install, for example: `..\Qt\6.8.4\msvc2022_64`
 ```
-cmake -B _build -S . -G "Visual Studio 17 2022" -A x64 -DCMAKE_PREFIX_PATH="C:\Qt\6.8.0\msvc2022_64"
+cmake -B _build -S . -G "Visual Studio 17 2022" -A x64 -DCMAKE_PREFIX_PATH="C:\Qt\6.8.4\msvc2022_64"
 cd _build
 cmake --build . --config Release
 ```
@@ -244,7 +245,7 @@ cmake --build . --config Release
 ### 4) Run the project
 
 ```
-cd TestAppLib/Release/
+cd QT_Project/Release/
 ./TestAppLib.exe
 ```
 
@@ -344,6 +345,61 @@ export DISPLAY=192.168.1.2:99.0
 - Ensure the firewall on the host allows connections to the X11 server (VcXsrv).
 - If the GUI does not display, check the `DISPLAY` variable and the VcXsrv logs.
 <br><br><br>
+
+## Creating Releases
+
+The repository includes a release workflow for Windows, Linux, and macOS. It starts
+when a semantic version tag is pushed:
+
+```text
+v1.0.0
+v1.1.0
+v2.0.0-beta.1
+```
+
+Create and push a stable release tag:
+
+```powershell
+git status
+```
+
+```powershell
+git tag -a v1.0.0 -m "Release v1.0.0"
+```
+
+```powershell
+git push origin v1.0.0
+```
+
+The Git working tree should be clean and the tagged commit should already have passed
+the normal build-and-test workflows.
+
+The release workflow creates a draft, tests the tagged revision, and builds all native
+packages. Assets are uploaded directly to the GitHub Release without using GitHub
+Actions artifact storage. The release is published only after all platform jobs
+succeed. If a job fails, the draft remains available for inspection.
+
+
+The workflow creates:
+
+- `TestAppLib-<VERSION>-windows-x64.zip`
+- `TestAppLib-<VERSION>-windows-x64-installer.exe`
+- `TestAppLib-<VERSION>-linux-x86_64.AppImage`
+- `TestAppLib-<VERSION>-macos-<ARCH>.zip`
+- `SHA256SUMS.txt`
+
+
+The tag supplies the version to CMake as `MAIN_PROJECT_VERSION`. CMake then populates
+`PROJECT_VERSION`, its major/minor/patch components, the configured `Config.h`, library
+metadata, package configuration, installer metadata, and release filenames.
+
+Pre-release tags containing a suffix, such as `v2.0.0-beta.1`, are published as GitHub
+pre-releases.
+
+The workflow requires `contents: write` for its repository-scoped `GITHUB_TOKEN`. No
+personal access token is required. Unsigned Windows and macOS packages may trigger
+operating-system security warnings; code signing and Apple notarization can be added
+later with repository secrets.
 
 ## [Translations]
 The project includes custom targets for updating and compiling translation files. These targets are defined in the CMake file located in `TestAppLib/QT_Project` and can be used to manage translation files located in the `TestAppLib/QT_Project/resources/Translations` directory.

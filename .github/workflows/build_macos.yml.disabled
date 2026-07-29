@@ -18,15 +18,15 @@ env:
   BUILD_TARGET_TYPE: static_library
   BUILD_TEST_PROJECT: true
   THIRD_PARTY_INCLUDE_DIR: ${{ github.workspace }}/ThirdPartyDir
-  QT_VERSION: "6.8.0"
+  QT_VERSION: "6.8.4"
 
 #------------------------------------------------
 # Workflow jobs
 #------------------------------------------------
 jobs:
   build-macos:
-    name: macOS Latest
-    runs-on: macos-latest
+    name: macOS 15
+    runs-on: macos-15
 
     steps:
       - name: Checkout repository (and submodules)

@@ -5,7 +5,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Define environment variables
-ENV QT_VERSION=6.8.0
+ENV QT_VERSION=6.8.4
 ENV QT_COMPILER=linux_gcc_64
 ENV QT_COMPILER_DIR=gcc_64
 ENV BUILD_TYPE=Release
