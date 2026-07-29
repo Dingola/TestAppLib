@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 env:
-  QT_VERSION: "6.8.4"
+  QT_VERSION: "6.8.0"
 
 concurrency:
   group: release-${{ github.ref }}

@@ -184,7 +184,7 @@ Once you have generated the required tokens, add them as secrets in your GitHub 
 <br>
 
 ### Environment Variables
-* **CMAKE_PREFIX_PATH:** Points CMake to the Qt 6 installation (e.g., C:\Qt\6.8.4\msvc2022_64 on Windows, ~/Qt/6.8.4/gcc_64 on Linux, ~/Qt/6.8.4/clang_64 on macOS).
+* **CMAKE_PREFIX_PATH:** Points CMake to the Qt 6 installation (e.g., C:\Qt\6.8.0\msvc2022_64 on Windows, ~/Qt/6.8.0/gcc_64 on Linux, ~/Qt/6.8.0/clang_64 on macOS).
 <br><br><br>
 
 ## [Supported Platforms]
@@ -231,9 +231,9 @@ cd TestAppLib/
 
 ### 3) Configuring and Building
 > [!IMPORTANT]
-> Ensure CMake can find Qt by setting `-DCMAKE_PREFIX_PATH` to your Qt install, for example: `..\Qt\6.8.4\msvc2022_64`
+> Ensure CMake can find Qt by setting `-DCMAKE_PREFIX_PATH` to your Qt install, for example: `..\Qt\6.8.0\msvc2022_64`
 ```
-cmake -B _build -S . -G "Visual Studio 17 2022" -A x64 -DCMAKE_PREFIX_PATH="C:\Qt\6.8.4\msvc2022_64"
+cmake -B _build -S . -G "Visual Studio 17 2022" -A x64 -DCMAKE_PREFIX_PATH="C:\Qt\6.8.0\msvc2022_64"
 cd _build
 cmake --build . --config Release
 ```

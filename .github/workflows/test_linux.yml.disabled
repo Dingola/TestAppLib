@@ -16,7 +16,7 @@ env:
   MAIN_PROJECT_NAME: ${{ github.event.repository.name }}
   BUILD_TYPE: Debug
   THIRD_PARTY_INCLUDE_DIR: ${{ github.workspace }}/ThirdPartyDir
-  QT_VERSION: "6.8.4"
+  QT_VERSION: "6.8.0"
 
 #------------------------------------------------
 # Workflow jobs
