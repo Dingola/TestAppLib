@@ -5,7 +5,10 @@ cmake_minimum_required(VERSION 3.29.3 FATAL_ERROR)
 ############################################
 
 set(PROJECT_NAME "")
-set(MAIN_PROJECT_VERSION "0.0.0" CACHE STRING "Project version")
+set(PROJECT_VER "0.0.0")
+set(PROJECT_VER_MAJOR "")
+set(PROJECT_VER_MINOR "")
+set(PROJECT_VER_PATCH "")
 
 # Set PROJECT_NAME to the folder name if it is not provided externally or is empty
 if (NOT PROJECT_NAME)
@@ -13,7 +16,7 @@ if (NOT PROJECT_NAME)
 endif()
 set(MAIN_PROJECT_NAME "${PROJECT_NAME}" CACHE STRING "Main project name")
 
-project(${MAIN_PROJECT_NAME}_Solution VERSION ${MAIN_PROJECT_VERSION} LANGUAGES CXX)
+project(${MAIN_PROJECT_NAME}_Solution LANGUAGES CXX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Suppress specific compiler warnings
@@ -27,7 +30,7 @@ include(${CMAKE_SOURCE_DIR}/CMake/BuildThirdPartyProject.cmake)
 ############################################
 
 # Set the build type for the target project
-set(${MAIN_PROJECT_NAME}_BUILD_TARGET_TYPE "{{ project_type }}" CACHE STRING "Build target options")
+set(${MAIN_PROJECT_NAME}_BUILD_TARGET_TYPE "executable" CACHE STRING "Build target options")
 set_property(CACHE ${MAIN_PROJECT_NAME}_BUILD_TARGET_TYPE PROPERTY STRINGS executable dynamic_library static_library)
 
 # Option to build the test project
